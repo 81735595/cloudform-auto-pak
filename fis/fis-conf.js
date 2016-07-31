@@ -1,57 +1,53 @@
-var setting = {
-    root: '/Users/zhengxingcheng/work/yonyou/iweb_cloudform/iform_parent/iform_parent/design/src/main/webapp',
-    files: [
-        'WEB-INF/tmpl/**/*.html'
-    ],
-    port: 3000
-}
-var preprocessor = require('./fis/replaceFreeMarkerVar')
+module.exports = function (webappRoot, entry_files) {
+    var replaceFreeMarkerVar = require('./replace-free-marker-var')
+    var makePackConf = require('./make-pack-conf')
+    var makePattern = require('./make-pattern')
 
-var makePackConf = require('./fis/makePackConf')
+    fis.project.setProjectRoot(webappRoot)
+    fis.set('project.files', entry_files)
+    // 暂时只针对design模块，所以这里先写死
+    fis.set('namespace', 'design')
 
-var makePattern = require('./fis/makePattern')
-
-var fisConf = function (fis) {
-    fis.set('namespace', 'design');
-
+    // match配置区
     fis.match('**', {
         deploy: [
             fis.plugin('encoding'),
             fis.plugin('local-deliver', {
-                to: setting.root
+                to: webappRoot
             })
         ]
     })
-
     fis.match('/WEB-INF/tmpl/(**/*.html)', {
         release: '/WEB-INF/tmpl/dist/$1',
         preprocessor: [
-            preprocessor({
-                values: [{
-                    key: 'uui',
-                    value: '../../../uui2'
-                }, {
-                    key: 'ctx',
-                    value: ''
-                }]
-            }),
-            makePackConf(fis, 'packager.deps-pack')
+            replaceFreeMarkerVar([{
+                key: 'uui',
+                value: '../../../uui2'
+            }, {
+                key: 'ctx',
+                value: ''
+            }]),
+            makePackConf
         ]
-    });
+    })
     fis.match('/static/(**)', {
-        url: '${ctx}/static/dist/$1',
+        parser: replaceFreeMarkerVar('restore'),
+        url: '$_{ctx}/static/dist/$1',
         release: '/static/dist/$1'
-    });
-    fis.match('/static/(**.{png,jpg,jpeg,gif,eot,svg,ttf,woff})', {
+    })
+    fis.match('/static/(**.{png,jpg,jpeg,gif,eot,svg,ttf,woff,woff2})', {
         url: '/iform_web/static/dist/$1',
         release: '/static/dist/$1'
-    });
+    })
     fis.match('/(static/js/design/{form-new,teams}/**.html)', {
         id: '$1',
-        parser: fis.plugin('amd-plugin'),
+        parser: [
+            replaceFreeMarkerVar('restore'),
+            fis.plugin('require-text-and-css-plugin'),
+        ],
         rExt: '.js',
         isMod: true
-    });
+    })
     fis.match('{/static/js/design/form-new/**,/static/js/filesystem/**,/static/js/design/table.js}', {
         postprocessor: fis.plugin('amd', {
             baseUrl: 'static/js/design/form-new/',
@@ -84,36 +80,39 @@ var fisConf = function (fis) {
                 }
             }
         })
-    });
+    })
     fis.match('/static/js/design/teams/**', {
         postprocessor: fis.plugin('amd', {
             baseUrl: 'static/js/design/'
         })
-    });
+    })
     fis.match(makePattern(
-        '/pkg/**',
-        '/static/css/design/**.css',
-        '/static/(**.{png,jpg,jpeg,gif,eot,svg,ttf,woff})',
-        '/static/js/design/form-new/**',
-        '/static/js/design/teams/**',
-        '/static/js/design/mission-center/**',
-        '/static/js/filesystem/**'
-    ), {
+            '/pkg/**',
+            '/static/css/design/**.css',
+            '/static/(**.{png,jpg,jpeg,gif,eot,svg,ttf,woff})',
+            '/static/js/design/form-new/**',
+            '/static/js/design/teams/**',
+            '/static/js/design/mission-center/**',
+            '/static/js/filesystem/**'
+        ), {
         useHash: true
     })
     fis.match('/uui2/(**)', {
+        parser: replaceFreeMarkerVar('restore'),
         release: false,
-        url: '${uui}/$1'
-    });
+        url: '$_{uui}/$1'
+    })
     fis.match('/pkg/**', {
+        // 因为pkg文件夹构建之初是不存在的，所以没办法complie，只能在之后再找机会修正url中的变量，
+        // 现在是在发布之后替换文件内容是做的
+        // parser: replaceFreeMarkerVar('restore'),
         release: '/static/dist$0',
-        url: '${ctx}/static/dist$0'
-    });
-
+        url: '$_{ctx}/static/dist$0'
+    })
     fis.match(makePattern(
-        '/static/js/design/form-new/**.js',
-        '/static/js/design/teasms/**.js'
-    ), {
+            '/static/js/design/form-new/**.js',
+            '/static/js/design/teasms/**.js'
+        ), {
         optimizer: fis.plugin('uglify-js')
     })
     fis.match('/static/css/design/**.css', {
@@ -123,24 +122,12 @@ var fisConf = function (fis) {
         useAMD: false
     })
     fis.match(makePattern(
-        '/static/js/design/form-new/lib/**min',
-        '/static/js/design/form-new/lib/**.map'
-    ), {
+            '/static/js/design/form-new/lib/**min',
+            '/static/js/design/form-new/lib/**.map'
+        ), {
         optimizer: false
     })
-
     fis.match('::packager', {
         packager: fis.plugin('deps-pack')
-    });
-}
-var init = function (fis) {
-    fis.log.level = fis.log.L_ALL;
-    fis.project.setProjectRoot(setting.root);
-    fis.set('project.files', setting.files);
-    fisConf(fis)
-}
-module.exports = {
-    init: init,
-    PORT: setting.port,
-    ROOT: setting.root
+    })
 }
