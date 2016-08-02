@@ -49,8 +49,8 @@ grunt.initConfig(
                 ]
             },
             // debug模式中，删除之前存在的输出文件
-            map: {
-                src: ['map.json']
+            debug: {
+                src: ['map.json', 'fis.log']
             }
         }
     }

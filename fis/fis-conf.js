@@ -122,7 +122,7 @@ module.exports = function (webappRoot, entry_files) {
         useAMD: false
     })
     fis.match(makePattern(
-            '/static/js/design/form-new/lib/**min',
+            '/static/js/design/**{-,.}min.{js,css}',
             '/static/js/design/form-new/lib/**.map'
         ), {
         optimizer: false

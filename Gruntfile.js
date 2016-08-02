@@ -28,7 +28,7 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('build_debug', [
-        'clean:map',
+        'clean:debug',
         'clean:dist',
         'copy:uui',
         'fis:debug',

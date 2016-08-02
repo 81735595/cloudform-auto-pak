@@ -36,14 +36,9 @@ module.exports =  function(filecontent, parentFile){
         while(packDep = regPackDep.exec(content)) {
             regRemoveQuo.lastIndex = 0
             dep = packDep[1].replace(regRemoveQuo, '')
-            // temp = dep
-            // if (~dep.indexOf('?__deps')) {
-            //     dep = dep.replace('?__deps', '')
-            // }
             file = fis.project.lookup(dep, parentFile).file
             if (file) {
                 file = file.subpath
-                // if (dep != temp) {
                 if (~dep.indexOf('?__deps')) {
                     pack.push(file + ':deps')
                 }
@@ -51,4 +46,5 @@ module.exports =  function(filecontent, parentFile){
             }
         }
     }
+    return filecontent
 }
