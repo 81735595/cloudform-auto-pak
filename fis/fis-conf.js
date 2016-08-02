@@ -5,6 +5,7 @@ module.exports = function (webappRoot, entry_files) {
 
     fis.project.setProjectRoot(webappRoot)
     fis.set('project.files', entry_files)
+    fis.set('ctx', '/iform_web')
     // 暂时只针对design模块，所以这里先写死
     fis.set('namespace', 'design')
 
@@ -36,7 +37,7 @@ module.exports = function (webappRoot, entry_files) {
         release: '/static/dist/$1'
     })
     fis.match('/static/(**.{png,jpg,jpeg,gif,eot,svg,ttf,woff,woff2})', {
-        url: '/iform_web/static/dist/$1',
+        url: '${ctx}/static/dist/$1',
         release: '/static/dist/$1'
     })
     fis.match('/(static/js/design/{form-new,teams}/**.html)', {
