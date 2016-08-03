@@ -36,6 +36,14 @@ module.exports = function (webappRoot, entry_files) {
         url: '$_{ctx}/static/dist/$1',
         release: '/static/dist/$1'
     })
+    // TODO delete
+    // 因为引用了ck，里面的又会异步加载一些资源文件，那些资源文件都还没有搬运，所以暂时先不做处理
+    // 后续优化掉
+    fis.match('/static/js/design/ckeditor/ckeditor.js', {
+        url: '$_{ctx}/static/js/design/ckeditor/ckeditor.js',
+        release: false
+    })
+
     fis.match('/static/(**.{png,jpg,jpeg,gif,eot,svg,ttf,woff,woff2})', {
         url: '${ctx}/static/dist/$1',
         release: '/static/dist/$1'
