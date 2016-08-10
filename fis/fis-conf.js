@@ -57,7 +57,11 @@ module.exports = function (webappRoot, entry_files) {
         rExt: '.js',
         isMod: true
     })
-    fis.match('{/static/js/design/form-new/**,/static/js/filesystem/**,/static/js/design/table.js}', {
+    fis.match(makePattern(
+            '/static/js/design/form-new/**',
+            '/static/js/filesystem/**',
+            '/static/js/design/table.js'
+        ), {
         postprocessor: fis.plugin('amd', {
             baseUrl: 'static/js/design/form-new/',
             paths : {
@@ -90,9 +94,18 @@ module.exports = function (webappRoot, entry_files) {
             }
         })
     })
-    fis.match('/static/js/design/teams/**', {
+    fis.match(makePattern(
+            '/static/js/design/teams/**',
+            '/static/js/design/echarts.min.js'
+        ), {
         postprocessor: fis.plugin('amd', {
-            baseUrl: 'static/js/design/'
+            baseUrl: 'static/js/design/',
+            paths: {
+                'echarts': 'echarts.min'
+            },
+            shim: {
+                'echarts' : []
+            }
         })
     })
     fis.match(makePattern(
@@ -119,9 +132,9 @@ module.exports = function (webappRoot, entry_files) {
         url: '$_{ctx}/static/dist$0'
     })
     fis.match(makePattern(
-            '/static/js/design/form-new/**.js',
-            '/static/js/design/teasms/**.js'
-        ), {
+        '/static/js/design/form-new/**.js',
+        '/static/js/design/teasms/**.js'
+    ), {
         optimizer: fis.plugin('uglify-js')
     })
     fis.match('/static/css/design/**.css', {
@@ -132,7 +145,9 @@ module.exports = function (webappRoot, entry_files) {
     })
     fis.match(makePattern(
             '/static/js/design/**{-,.}min.{js,css}',
-            '/static/js/design/form-new/lib/**.map'
+            '/static/js/design/form-new/lib/**.map',
+            '/static/js/design/form-new/index.js',
+            '/static/js/design/eteams/index.js'
         ), {
         optimizer: false
     })

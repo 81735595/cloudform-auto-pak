@@ -41,7 +41,7 @@ module.exports = function (settings, cb) {
                 ]
             },
             {
-                pattern: '/static/js/design/{form-new,teams}/index.js',
+                pattern: '{static/js/design/*/index.js,pkg/**.js}',
                 regexp: /\/\*__REQUIRE_CONFIG__\*\/[\s\S\n\r]*\/\*__REQUIRE_CONFIG__\*\//g,
                 replacement: ''
             }

@@ -1,4 +1,3 @@
-// TODO debug模式保存导出log
 module.exports = function(debug) {
     var grunt = require('grunt')
     debug = !!debug
