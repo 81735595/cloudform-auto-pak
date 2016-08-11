@@ -133,7 +133,7 @@ module.exports = function (webappRoot, entry_files) {
     })
     fis.match(makePattern(
         '/static/js/design/form-new/**.js',
-        '/static/js/design/teasms/**.js'
+        '/static/js/design/teams/**.js'
     ), {
         optimizer: fis.plugin('uglify-js')
     })
