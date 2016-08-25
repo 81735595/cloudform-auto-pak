@@ -70,7 +70,8 @@ module.exports = function (webappRoot, entry_files) {
         		'ossupload': "../../filesystem/ossupload",
         		'cookie': "../../filesystem/jquery.cookie",
         		'interface_file_impl': "../../filesystem/interface.file.impl",
-        		'interface_file': "../../filesystem/interface.file"
+        		'interface_file': "../../filesystem/interface.file",
+				'vue': "lib/bower_components/vue/dist/vue.min"
         	},
             shim : {
                 'table' : [],
@@ -142,6 +143,9 @@ module.exports = function (webappRoot, entry_files) {
     })
     fis.match('/static/js/design/form-new/lib/**', {
         useAMD: false
+    })
+	fis.match('/static/js/design/form-new/lib/**/vue/**', {
+        useAMD: true
     })
     fis.match(makePattern(
             '/static/js/design/**{-,.}min.{js,css}',
