@@ -16,6 +16,8 @@ module.exports = function(grunt) {
 
     grunt.registerTask('fis', require('./fis/grunt-fis'));
 
+	grunt.registerTask('git', require('./git/index'));
+
     // 注册命令
     // build命令用来生成资源文件
     // build-debug会在生成资源文件的同事在当前文件夹生成一个map文件，通过map文件可以查看
@@ -24,7 +26,8 @@ module.exports = function(grunt) {
         'clean:dist',
         'copy:uui',
         'fis',
-        'clean:uui'
+        'clean:uui',
+        'git'
     ]);
 
     grunt.registerTask('build_debug', [

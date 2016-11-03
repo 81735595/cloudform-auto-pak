@@ -13,13 +13,14 @@
   ],
   "author": "zhengxc",
   "dependencies": {
+    "fis-postprocessor-amd": "git://github.com/81735595/fis-postprocessor-amd.git",
     "fis3": "^3.4.17",
     "fis3-command-release": "^1.3.8",
+    "fis3-packager-deps-pack": "git://github.com/81735595/fis3-packager-deps-pack.git",
+    "fis3-parser-require-text-and-css-plugin": "git://github.com/81735595/fis3-parser-require-text-and-css-plugin.git",
     "grunt": "^1.0.1",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-copy": "^1.0.0",
-    "fis3-packager-deps-pack": "git://github.com/81735595/fis3-packager-deps-pack.git",
-    "fis-postprocessor-amd": "git://github.com/81735595/fis-postprocessor-amd.git",
-    "fis3-parser-require-text-and-css-plugin":  "git://github.com/81735595/fis3-parser-require-text-and-css-plugin.git"
+    "nodegit": "^0.16.0"
   }
 }

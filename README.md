@@ -25,3 +25,28 @@ $ npm run debug
 debug模式下所有文件都不走缓存，所以比较慢，编译过程中会在命令行输出各个文件的编译流程信息，后续准备加入输出log文件的功能，因为命令行下的调试信息不好看嘛
 
 另外，在debug模式下还会在当前文件夹下生成map.json文件，根据这个文件可以查看各个文件最终的编译状态和编译属性，以及打包信息，可以作为调试的依据，也可以给后端使用，做动态打包什么的
+
+------
+
+## 2016.11.03 更新
+
+加入了git自动commit的功能，本来打算用shell来实现的，但是考虑到shell没法在windows上用，所以用nodegit来做了……啊，说起来nodegit真是各种拧巴啊，文档里有哪些接口到是有写，但是很多接口只写了参数类型，没写到底干啥用的……而底层的操作又都是调用C语言写的模块，搞的我根本不知道怎么使……按照他提供的例子，试了半天才试出来，希望在windows上也能正常跑吧……不然还不如用shell写呢……
+
+另外，在安装nodegit的过程中遇到了个问题，首先安装这个模块需要管理员权限，然后在preinstall时报了：…… libssh2/missing: Unknown `--is-lightweight' …… 的错误，我的环境是osx 10.11.6，nodejs v0.12.7，最后升级了xcode CLT搞好了，之前查了各种资料也没找到原因，后来在github上的issues上看到了答案 [Can't install via NPM](https://github.com/nodegit/nodegit/issues/1134)
+
+具体的配置方法是，在conf.js中添加git属性，例子如下：
+````javascript
+module.exports = {
+    // ...
+	git: {
+		// path属性是用来匹配要提交哪些文件到缓冲区的，类似git add 后面的参数，类型可以是数组，也可以是字符串，为空的时候会add所有可提交的文件
+		paths: [
+			'xxx/dist1',
+			'xxx/dist2'
+		],
+		// commit message，不能不填
+		message: 'XXXXXX'
+	}
+	// ...
+}
+````
