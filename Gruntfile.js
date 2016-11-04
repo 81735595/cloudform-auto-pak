@@ -14,27 +14,19 @@ module.exports = function(grunt) {
         grunt.loadNpmTasks(npmTaskName);
     });
 
-    grunt.registerTask('fis', require('./fis/grunt-fis'));
+	require('./module')(grunt);
 
-	grunt.registerTask('git', require('./git/index'));
+	grunt.registerTask('git', require('./git'));
 
     // 注册命令
     // build命令用来生成资源文件
     // build-debug会在生成资源文件的同事在当前文件夹生成一个map文件，通过map文件可以查看
     // pack文件包含的内容等配置信息，同时在编译过程中也会打印所有的log
-    grunt.registerTask('build', [
-        'clean:dist',
-        'copy:uui',
-        'fis',
-        'clean:uui',
-        'git'
-    ]);
-
-    grunt.registerTask('build_debug', [
-        'clean:debug',
-        'clean:dist',
-        'copy:uui',
-        'fis:debug',
-        'clean:uui'
-    ]);
+    grunt.registerTask('build', function(debug) {
+		if (debug) {
+			grunt.task.run(['module:debug'])
+		} else {
+			grunt.task.run(['module'/*, 'git'*/])
+		}
+	});
 }

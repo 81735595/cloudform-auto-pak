@@ -2,8 +2,8 @@ module.exports = function() {
     var grunt = require('grunt')
 	var config = require('../conf')
 	var nodegit = require("nodegit")
-    var webappRoot = config.root
 	var gitConfig = config.git
+    var webappRoot = gitConfig.root
 	var done = this.async()
 	if (!gitConfig) {
 		grunt.log.subhead('未设置git参数，无法自动进行commit如果需要使用这个功能，请参考README.md进行设置')

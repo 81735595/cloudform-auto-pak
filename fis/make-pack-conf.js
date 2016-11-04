@@ -1,7 +1,7 @@
 'use strict';
 // 根据html里面的标注生成deps-pack的pack-conf
 var packMap = {};
-var regPackInfo = /<!--pack(Js|Css)=([a-zA-Z\/\.]*)-->[\s\S\n\r]*<!--pack\1-->/g
+var regPackInfo = /<!--pack(Js|Css)=([a-zA-Z\/\._-]*)-->[\s\S\n\r]*?<!--pack\1-->/g
 var regPackDeps = {
     'js': /<script(?=\s)[\s\S]*?\bsrc\s*=\s*("(?:[^\\"\r\n\f]|\[\s\S])*"|'(?:[^\\'\n\r\f]|\\[\s\S])*')[\s\S]*?>/g,
     'css': /<link(?=\s)[\s\S]*?\bhref\s*=\s*("(?:[^\\"\r\n\f]|\[\s\S])*"|'(?:[^\\'\n\r\f]|\\[\s\S])*')[\s\S]*?>/g
@@ -16,8 +16,7 @@ fis.match('::package', {
         fis.emit('package:start');
     }
 })
-
-module.exports =  function(filecontent, parentFile){
+var makePackConf = function(filecontent, parentFile){
     var packInfo, content, type, packUrl, regPackDep, packDep, dep, temp, pack, root, file, dirname
     regPackInfo.lastIndex = 0
     while(packInfo = regPackInfo.exec(filecontent)) {
@@ -48,3 +47,5 @@ module.exports =  function(filecontent, parentFile){
     }
     return filecontent
 }
+makePackConf.regPackInfo = regPackInfo
+module.exports = makePackConf
