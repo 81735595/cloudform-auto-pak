@@ -20,7 +20,7 @@ module.exports = {
 		paths: [
 			'iform_parent/iform_parent/design/src/main/webapp/static/dist',
 			'iform_parent/iform_parent/design/src/main/webapp/WEB-INF/tmpl/dist',
-			'iform_parent/iform_parent/rt/src/main/webapp/static_dd/dist'
+			'iform_parent/iform_parent/rt/src/main/webapp/static_dd/rt/dist'
 		],
 		message: '重新构建静态文件'
 	}

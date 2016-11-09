@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 		if (debug) {
 			grunt.task.run(['module:debug'])
 		} else {
-			grunt.task.run(['module'/*, 'git'*/])
+			grunt.task.run(['module', 'git'])
 		}
 	});
 }
