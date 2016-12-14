@@ -50,3 +50,33 @@ module.exports = {
 	// ...
 }
 ````
+------
+
+## 2016.12.14 更新
+
+加入了多模块支持的功能，现在可以设置多个模块在conf.js中设置多个模块，然后串行执行了。原来的脚本也都拆分到模块了里。
+
+具体配置方法是，首先，在conf.js中添加module属性，例子如下：
+
+````javascript
+module.exports = {
+    // ...
+	module: {
+		// module对象下的每个属性的属性值代表模块在module文件夹下的文件夹名，属性的值是一个对象，用来写模块的基本信息，现在只需要root和entry_files两个属性
+		'design': {
+            // 要编译的模块下的webapp文件夹的绝对路径，在编译前需要修改成本地的路径
+            root: '/Users/zhengxingcheng/work/yonyou/iweb_cloudform/iform_parent/iform_parent/design/src/main/webapp',
+            // 依赖扫描的入口文件,可以用glob语法，可以是多条
+            entry_files: [
+                'WEB-INF/tmpl/**/*.html'
+            ]
+        }
+        // ...
+	}
+	// ...
+}
+````
+
+设置好的同conf.js文件的同事，需要在module下建立跟module属性名同名的文件夹，文件夹下的index.js文件会被串行执行，所以当前模块的编译流程都在这个文件夹下面。
+
+现阶段每个模块的编译脚本相似度很高，后续会再做优化把相似的代码抽象抽出来。
