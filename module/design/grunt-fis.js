@@ -36,7 +36,8 @@ module.exports = function(grunt, webappRoot, entryFiles) {
 	    // 清除所有缓存，不清除不走complie流程，没法生成pack配置
 	    stream.write('\n 清理缓存 '.bold.yellow);
 	    var now = Date.now();
-	    fis.cache.clean();
+		fis.cache.clean();
+		fis.cache.clean('../plugin');
 	    stream.write((Date.now() - now + 'ms').green.bold);
 	    stream.write('\n');
 
@@ -138,11 +139,6 @@ module.exports = function(grunt, webappRoot, entryFiles) {
                         }
                     }
                 ]
-            },
-            {
-                pattern: '{static/js/design/*/index.js,pkg/**.js}',
-                regexp: /\/\*__REQUIRE_CONFIG__\*\/[\s\S\n\r]*\/\*__REQUIRE_CONFIG__\*\//g,
-                replacement: ''
             }])
 	    })
 	}

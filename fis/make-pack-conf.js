@@ -2,9 +2,15 @@
 // 根据html里面的标注生成deps-pack的pack-conf
 var packMap = {};
 var regPackInfo = /<!--pack(Js|Css)=([a-zA-Z\/\._-]*)-->[\s\S\n\r]*?<!--pack\1-->/g
+var regMaker = function (tag, attr, g) {
+	if (!(typeof tag == 'string' && typeof attr == 'string')) {
+		return new RegExp()
+	}
+	return new RegExp('<' + tag + '(?=\\s)[^\r\n\f]*?' + attr + '\\s*=\\s*("(?:[^\"\\r\\n\\f])*\"|\'(?:[^\'\\n\\r\\f])*\')[^\r\n\f]*?>', g ? 'g' : '')
+}
 var regPackDeps = {
-    'js': /<script(?=\s)[\s\S]*?\bsrc\s*=\s*("(?:[^\\"\r\n\f]|\[\s\S])*"|'(?:[^\\'\n\r\f]|\\[\s\S])*')[\s\S]*?>/g,
-    'css': /<link(?=\s)[\s\S]*?\bhref\s*=\s*("(?:[^\\"\r\n\f]|\[\s\S])*"|'(?:[^\\'\n\r\f]|\\[\s\S])*')[\s\S]*?>/g
+    'js': regMaker('script', 'src', true),
+    'css': regMaker('link', 'href', true)
 }
 var regRemoveQuo = /[\'\"]/g
 
@@ -48,4 +54,7 @@ var makePackConf = function(filecontent, parentFile){
     return filecontent
 }
 makePackConf.regPackInfo = regPackInfo
+makePackConf.regMaker = regMaker
+makePackConf.regPackDeps = regPackDeps
+makePackConf.regRemoveQuo = regRemoveQuo
 module.exports = makePackConf

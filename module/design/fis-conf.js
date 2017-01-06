@@ -58,6 +58,15 @@ module.exports = function (webappRoot, entry_files) {
         rExt: '.js',
         isMod: true
     })
+
+    fisMedia.match('/static/js/design/{form-new,teams}/index.js', {
+		parser: function (content) {
+			return content.replace(
+				/\/\*__REQUIRE_CONFIG__\*\/[\s\S\n\r]*\/\*__REQUIRE_CONFIG__\*\//g,
+				'require.jsExtRegExp = /^\\/|:\\/\\/|\\?/;'
+			)
+		}
+    })
     fisMedia.match(makePattern(
             '/static/js/design/form-new/**',
             '/static/js/filesystem/**',
@@ -72,9 +81,11 @@ module.exports = function (webappRoot, entry_files) {
         		'cookie': "../../filesystem/jquery.cookie",
         		'interface_file_impl': "../../filesystem/interface.file.impl",
         		'interface_file': "../../filesystem/interface.file",
-				'vue': "lib/bower_components/vue/dist/vue.min"
+				'vue': "lib/bower_components/vue/dist/vue.min",
+				'echarts': '../echarts.min'
         	},
             shim : {
+				'echarts' : [],
                 'table' : [],
                 'ajaxfileupload' : [],
                 'cookie' : [],

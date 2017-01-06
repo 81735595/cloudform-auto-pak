@@ -25,7 +25,7 @@ module.exports = function(grunt, webappRoot, entryFiles) {
 	        // log级别为打印所有log，如果只打印debug信息，warning就丢了
 	        fis.log.level = fis.log.L_ALL
 	        // 输出log信息到当前文件夹下的fis.log文件
-	        var logpath = process.cwd() + '/rt_dd_fis.log'
+	        var logpath = process.cwd() + '/rt_fis.log'
 	        fis.log.on.any = function(type, msg){
 	            fis.util.write(logpath, ('\n ' + '[' + type+ ']' + ' ' + msg + '\n'), null, true)
 	        }
@@ -36,7 +36,7 @@ module.exports = function(grunt, webappRoot, entryFiles) {
 	    // 清除所有缓存，不清除不走complie流程，没法生成pack配置
 	    stream.write('\n 清理缓存 '.bold.yellow);
 	    var now = Date.now();
-	    fis.cache.clean();
+		fis.cache.clean();
 		fis.cache.clean('../plugin');
 	    stream.write((Date.now() - now + 'ms').green.bold);
 	    stream.write('\n');
@@ -102,11 +102,11 @@ module.exports = function(grunt, webappRoot, entryFiles) {
 	                    temp[i] = v
 	                })
 	                ret.pkg = temp
-	                grunt.file.write('rt_dd_map.json', JSON.stringify(ret, null, "\t"))
+	                grunt.file.write('rt_map.json', JSON.stringify(ret, null, "\t"))
 	            }
 	            done();
 	        }, [{
-                pattern: '/static_dd/rt/iform_app/index.html',
+                pattern: '/static/html/rt/*.html',
                 replaces: [
                     {
                         regexp: makePackConf.regPackInfo,

@@ -13,6 +13,12 @@ module.exports = {
 			entry_files: [
 		        'static_dd/rt/iform_app/index.html'
 		    ]
+		},
+		'rt': {
+			root: '/Users/zhengxingcheng/work/yonyou/iweb_cloudform/iform_parent/iform_parent/rt/src/main/webapp',
+			entry_files: [
+		        'static/html/rt/*.html'
+		    ]
 		}
 	},
 	git: {
@@ -20,7 +26,8 @@ module.exports = {
 		paths: [
 			'iform_parent/iform_parent/design/src/main/webapp/static/dist',
 			'iform_parent/iform_parent/design/src/main/webapp/WEB-INF/tmpl/dist',
-			'iform_parent/iform_parent/rt/src/main/webapp/static_dd/rt/dist'
+			'iform_parent/iform_parent/rt/src/main/webapp/static_dd/rt/dist',
+			'iform_parent/iform_parent/rt/src/main/webapp/static/dist'
 		],
 		message: '重新构建静态文件'
 	}

@@ -42,6 +42,14 @@ module.exports = function (webappRoot, entry_files) {
         rExt: '.js',
         isMod: true
     })
+	fisMedia.match('/static_dd/rt/iform_app/index.js',{
+		parser: function (content) {
+			return content.replace(
+				/\/\*__REQUIRE_CONFIG__\*\/[\s\S\n\r]*\/\*__REQUIRE_CONFIG__\*\//g,
+				'require.jsExtRegExp = /^\\/|:\\/\\/|\\?/;'
+			)
+		}
+	})
     fisMedia.match(makePattern(
 			'/static_dd/rt/*.js',
 			'/static_dd/rt/iform_app/*.js',
@@ -52,7 +60,6 @@ module.exports = function (webappRoot, entry_files) {
         postprocessor: fis.plugin('amd', {
             baseUrl: 'static_dd/rt/',
             paths : {
-				'text': 'text',
 				'underscore': 'underscore',
 				'vue': 'vue',
 				'vue-router': 'vue-router',
@@ -60,11 +67,6 @@ module.exports = function (webappRoot, entry_files) {
 				'fetch': 'fetch'
         	},
             shim : {
-                'text' : [],
-				'underscore': [],
-				'vue': [],
-				'vue-router': [],
-				'es6-promise': [],
 				'fetch': {
 					deps: ['es6-promise'],
 					init: function (es6Promise) {

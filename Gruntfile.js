@@ -22,7 +22,7 @@ module.exports = function(grunt) {
     // build命令用来生成资源文件
     // build-debug会在生成资源文件的同事在当前文件夹生成一个map文件，通过map文件可以查看
     // pack文件包含的内容等配置信息，同时在编译过程中也会打印所有的log
-    grunt.registerTask('build', function(debug) {
+    grunt.registerTask('build-all', function(debug) {
 		if (debug) {
 			grunt.task.run(['module:debug'])
 		} else {
