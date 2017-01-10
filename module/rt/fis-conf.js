@@ -105,8 +105,12 @@ module.exports = function (webappRoot, entry_files) {
 				workflow: {
 					deps: ["uui", "dateutil"],
 					init: function () {
-						window.getApproveInfosNew = getApproveInfosNew
-						window.getButtonsInfo = getButtonsInfo
+						window.getApproveInfosNew = getApproveInfosNew;
+						window.getButtonsInfo = getButtonsInfo;
+						window.workflowdata = workflowdata;
+						window.getParamFromUrl = getParamFromUrl;
+						window.doAction = doAction;
+						window.initRefUI = initRefUI;
 					}
 				},
 				ajaxfileupload: [],
