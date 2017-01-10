@@ -39,7 +39,7 @@ if (build) {
 	var progress = taskList.length;
 	var curProgress = 0;
 
-	gt.show('Preparation……', 0);
+	gt.show('Current progress (' + curProgress + '/' + progress + ')', 0);
 	var pulse = setInterval(function () {
 		gt.pulse()
 	}, 100);
@@ -50,7 +50,7 @@ if (build) {
 			cp.stdout.pipe(createWriteStream('./'+key+'.log'));
 			cp.on('close', function (code) {
 				curProgress += 1;
-				gt.show('build ' + key, curProgress/progress);
+				gt.show('Current progress (' + curProgress + '/' + progress + ')', curProgress/progress);
 				resolve({
 					name: key,
 					code: code
