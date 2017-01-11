@@ -67,11 +67,6 @@ module.exports = function (webappRoot, entry_files) {
         postprocessor: fis.plugin('amd', {
             baseUrl: 'static/',
             paths : {
-				'jquery': "../uui2/libs/jquery/jquery-1.11.2",
-				'uui': "../uui2/libs/uui/js/u",
-				'i18next': "../uui2/libs/i18next/i18next",
-				'bignumber': "../uui2/libs/bignumber/bignumber",
-				'bootstrap': "../uui2/libs/bootstrap/js/bootstrap",
 				'uiReferFormInit' : "js/rt/uirefer.forminit",
 				'formula2': 'js/rt/formula',
 				'moneyuui': 'js/rt/moneyuui',
@@ -94,16 +89,13 @@ module.exports = function (webappRoot, entry_files) {
 				'ueditor': "js/rt/ueditor/ueditor.all"
         	},
             shim : {
-				uui: {
-					deps: ["jquery", "bootstrap", "i18next"]
-				},
 				dateutil: {
 					init: function() {
-						window.getFormatDateByLong = getFormatDateByLong
+						window.getFormatDateByLong = getFormatDateByLong;
 					}
 				},
 				workflow: {
-					deps: ["uui", "dateutil"],
+					deps: ["dateutil"],
 					init: function () {
 						window.getApproveInfosNew = getApproveInfosNew;
 						window.getButtonsInfo = getButtonsInfo;
@@ -127,7 +119,7 @@ module.exports = function (webappRoot, entry_files) {
                     }
                 },
 				interface_file_impl:{
-					deps: ["interface_file", "jquery", "ossupload", "ajaxfileupload"]
+					deps: ["interface_file", "ossupload", "ajaxfileupload"]
 				},
 				ueditor: []
             }
@@ -177,8 +169,18 @@ module.exports = function (webappRoot, entry_files) {
 				require.jsExtRegExp = /^\\/|:\\/\\/|\\?/;'
 			)
 		}
-	})
+	});
 
+	fisMedia.match('/uui2/libs/uui/js/u.js', {
+		parser: function (content) {
+			return content.replace(
+				/\(function\(factory\) \{[a-zA-Z0-9\\/.'=\n\r (&){}<>\-\[\]|;,]*}\(function\(koExports\, require\)\{/,
+				'(function(factory) {\
+					factory(window[\'ko\'] = {});\
+				}(function(koExports, require){'
+			)
+		}
+	});
 
     fisMedia.match('/pkg/(**)', {
         // 因为pkg文件夹构建之初是不存在的，所以没办法complie，只能在之后再找机会修正url中的变量，
@@ -189,10 +191,11 @@ module.exports = function (webappRoot, entry_files) {
     })
 	fisMedia.match('u.css', {
 		preprocessor: [function(content, file){
-			var reg = /@import\s*("(?:[^"\r\n\f])*"|'(?:[^'\n\r\f])*');/g
-			return content.replace(reg, function (match, p1) {
-				return 'url(' + p1.replace(makePackConf.regRemoveQuo, '') + '?__inline)'
-			})
+			var reg = /@import\s*("(?:[^"\r\n\f])*"|'(?:[^'\n\r\f])*');/g;
+			var result = content.replace(reg, function (match, p1) {
+				return '@import url(' + p1.replace(makePackConf.regRemoveQuo, '') + '?__inline);'
+			});
+			return result
 		}]
     })
     fisMedia.match('/**.css', {
