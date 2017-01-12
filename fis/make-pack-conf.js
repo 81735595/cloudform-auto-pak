@@ -1,7 +1,7 @@
 'use strict';
 // 根据html里面的标注生成deps-pack的pack-conf
 var packMap = {};
-var regPackInfo = /<!--pack(Js|Css)=([a-zA-Z\/\._-]*)-->[\s\S\n\r]*?<!--pack\1-->/g
+var regPackInfo = /<!--pack(Js|Css)=([a-zA-Z0-9\/\.\_\-\?]*)-->[\s\S\n\r]*?<!--pack\1-->/g
 var regMaker = function (tag, attr, g) {
 	if (!(typeof tag == 'string' && typeof attr == 'string')) {
 		return new RegExp()

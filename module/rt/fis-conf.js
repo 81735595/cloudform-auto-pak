@@ -193,7 +193,7 @@ module.exports = function (webappRoot, entry_files) {
 		preprocessor: [function(content, file){
 			var reg = /@import\s*("(?:[^"\r\n\f])*"|'(?:[^'\n\r\f])*');/g;
 			var result = content.replace(reg, function (match, p1) {
-				return '@import url(' + p1.replace(makePackConf.regRemoveQuo, '') + '?__inline);'
+				return '@import url(\'./' + p1.replace(makePackConf.regRemoveQuo, '') + '\');'
 			});
 			return result
 		}]
