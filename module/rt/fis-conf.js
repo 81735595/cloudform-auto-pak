@@ -80,6 +80,8 @@ module.exports = function (webappRoot, entry_files) {
 				'dateutil': 'freebill/js/dateutil',
 				'texteditoruui': 'js/rt/texteditoruui',
 				'billmarkeruui': 'js/rt/billmarkeruui',
+		   		'billmarkerorguui': 'js/rt/billmarkerorguui',
+				'billmarkermanageruui': 'js/rt/billmarkermanageruui',
 				'fileuui': 'js/rt/fileuui',
 				'compatibleuui': 'js/rt/compatibleuui',
 				'ajaxfileupload': "../filesystem/ajaxfileupload",
