@@ -80,7 +80,7 @@ module.exports = function (webappRoot, entry_files) {
 				'dateutil': 'freebill/js/dateutil',
 				'texteditoruui': 'js/rt/texteditoruui',
 				'billmarkeruui': 'js/rt/billmarkeruui',
-		   		'billmarkerorguui': 'js/rt/billmarkerorguui',
+				'billmarkerorguui': 'js/rt/billmarkerorguui',
 				'billmarkermanageruui': 'js/rt/billmarkermanageruui',
 				'fileuui': 'js/rt/fileuui',
 				'compatibleuui': 'js/rt/compatibleuui',
@@ -88,7 +88,8 @@ module.exports = function (webappRoot, entry_files) {
 				'ossupload':"../filesystem/ossupload",
 				'interface_file_impl':"../filesystem/interface.file.impl",
 				'interface_file':"../filesystem/interface.file",
-				'ueditor': "js/rt/ueditor/ueditor.all"
+				'ueditor': "js/rt/ueditor/ueditor.all",
+				'bpm':"freebill/js/bpm"
         	},
             shim : {
 				dateutil: {
