@@ -58,12 +58,51 @@ module.exports = function (webappRoot, entry_files) {
         rExt: '.js',
         isMod: true
     })
+    fisMedia.match('/uui2/libs/uui/js/u.js', {
+        parser: function (content) {
+            return content.replace(
+                /\(function\(factory\) \{[a-zA-Z0-9\\/.'=\n\r (&){}<>\-\[\]|;,]*}\(function\(koExports\, require\)\{/,
+                '(function(factory) {\
+                    factory(window[\'ko\'] = {});\
+                }(function(koExports, require){'
+            )
+        }
+    });
 
     fisMedia.match('/static/js/design/{form-new,teams}/index.js', {
 		parser: function (content) {
 			return content.replace(
 				/\/\*__REQUIRE_CONFIG__\*\/[\s\S\n\r]*\/\*__REQUIRE_CONFIG__\*\//g,
-				'require.jsExtRegExp = /^\\/|:\\/\\/|\\?/;'
+				'\
+                require.config({\
+                    paths: {\
+                        "refer": window.$ctx + "/static/js/uiref/refer",\
+                        "reflib":  window.$ctx + "/static/js/uiref/reflib",\
+                        "refGrid":  window.$ctx + "/static/js/uiref/refGrid",\
+                        "refGridtree":  window.$ctx + "/static/js/uiref/refGridtree",\
+                        "refTree":  window.$ctx + "/static/js/uiref/refTree",\
+                        "refcommon": window.$ctx + "/static/js/uiref/refcommon",\
+                        "uiReferComp" : window.$ctx + "/static/js/uiref/uiReferComp"\
+                    },\
+                    shim: {\
+                        "refer":{\
+                            deps: ["reflib"]\
+                        },\
+                        "refGridtree":{\
+                            deps: ["reflib"]\
+                        },\
+                        "refGrid":{\
+                            deps: ["reflib"]\
+                        },\
+                        "refTree":{\
+                            deps: ["reflib"]\
+                        },\
+                        "refcommon":{\
+                            deps: ["reflib"]\
+                        }\
+                    }\
+                });\
+                require.jsExtRegExp = /^\\/|:\\/\\/|\\?/;'
 			)
 		}
     })
@@ -121,6 +160,7 @@ module.exports = function (webappRoot, entry_files) {
             }
         })
     })
+
     fisMedia.match(makePattern(
             '/pkg/**',
             '/static/css/design/**.css',
