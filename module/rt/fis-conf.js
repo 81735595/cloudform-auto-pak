@@ -89,7 +89,8 @@ module.exports = function (webappRoot, entry_files) {
 				'interface_file_impl':"../filesystem/interface.file.impl",
 				'interface_file':"../filesystem/interface.file",
 				'ueditor': "js/rt/ueditor/ueditor.all",
-				'bpm':"freebill/js/bpm"
+				'bpm':"freebill/js/bpm",
+				'utilBase':"js/rt/utils/base",
         	},
             shim : {
 				dateutil: {
