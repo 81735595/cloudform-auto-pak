@@ -82,6 +82,7 @@ module.exports = function (webappRoot, entry_files) {
 				'billmarkeruui': 'js/rt/billmarkeruui',
 				'billmarkerorguui': 'js/rt/billmarkerorguui',
 				'billmarkermanageruui': 'js/rt/billmarkermanageruui',
+				'billmarkerpostuui': 'js/rt/billmarkerpostuui',
 				'fileuui': 'js/rt/fileuui',
 				'compatibleuui': 'js/rt/compatibleuui',
 				'ajaxfileupload': "../filesystem/ajaxfileupload",
