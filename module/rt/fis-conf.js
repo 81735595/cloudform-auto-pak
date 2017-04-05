@@ -48,6 +48,7 @@ module.exports = function (webappRoot, entry_files) {
 		],
 		useHash: false
 	})
+	/*
 	fisMedia.match('/(static/freebill/js/*.html)', {
         id: '$1',
         parser: [
@@ -57,6 +58,7 @@ module.exports = function (webappRoot, entry_files) {
         rExt: '.js',
         isMod: true
     })
+	*/
     fisMedia.match(makePattern(
 			'/static/js/rt/**.js',
 			'/static/freebill/**',
@@ -71,18 +73,20 @@ module.exports = function (webappRoot, entry_files) {
 				'formula2': 'js/rt/formula',
 				'moneyuui': 'js/rt/moneyuui',
 				'viewDataTable': 'js/rt/view.datatable',
-				'mobileViewDataTable': 'js/rt/mobile.view.datatable',
+				// 'mobileViewDataTable': 'js/rt/mobile.view.datatable',
 				'dateintervaluui': 'js/rt/dateintervaluui',
 				'ratyuui': 'js/rt/ratyuui',
 				'workflow': 'freebill/js/workflow',
-				'workflowmobile': 'freebill/js/workflowmobile',
-				'vue': 'freebill/js/vue',
+				// 'workflowmobile': 'freebill/js/workflowmobile',
+				// 'vue': 'freebill/js/vue',
 				'dateutil': 'freebill/js/dateutil',
+				'bpm':"freebill/js/bpm",
 				'texteditoruui': 'js/rt/texteditoruui',
 				'billmarkeruui': 'js/rt/billmarkeruui',
 				'billmarkerorguui': 'js/rt/billmarkerorguui',
 				'billmarkermanageruui': 'js/rt/billmarkermanageruui',
 				'billmarkerpostuui': 'js/rt/billmarkerpostuui',
+				'datecalculateuui': 'js/rt/datecalculateuui',
 				'fileuui': 'js/rt/fileuui',
 				'compatibleuui': 'js/rt/compatibleuui',
 				'ajaxfileupload': "../filesystem/ajaxfileupload",
@@ -90,8 +94,10 @@ module.exports = function (webappRoot, entry_files) {
 				'interface_file_impl':"../filesystem/interface.file.impl",
 				'interface_file':"../filesystem/interface.file",
 				'ueditor': "js/rt/ueditor/ueditor.all",
-				'bpm':"freebill/js/bpm",
 				'utilBase':"js/rt/utils/base",
+				'chosen': 'js/rt/chosen/chosen.jquery',
+				'FileUploader': 'js/rt/plupload/form-file-uploader',
+				'plupload': "js/rt/plupload/plupload.full.min"
         	},
             shim : {
 				dateutil: {
@@ -99,8 +105,10 @@ module.exports = function (webappRoot, entry_files) {
 						window.getFormatDateByLong = getFormatDateByLong;
 					}
 				},
+				plupload: [],
+				chosen: ["css!js/rt/chosen/chosen.css"],
 				workflow: {
-					deps: ["dateutil"],
+					deps: ["dateutil", "chosen"],
 					init: function () {
 						window.getApproveInfosNew = getApproveInfosNew;
 						window.getButtonsInfo = getButtonsInfo;
@@ -129,6 +137,15 @@ module.exports = function (webappRoot, entry_files) {
 				ueditor: []
             }
         })
+    })
+
+	fisMedia.match('/(static/js/rt/chosen/chosen.css)', {
+        id: '$1',
+        parser: [
+            fis.plugin('require-text-and-css-plugin'),
+        ],
+        rExt: '.js',
+        isMod: true
     })
 
 	fisMedia.match('/static/js/rt/**.js', {
