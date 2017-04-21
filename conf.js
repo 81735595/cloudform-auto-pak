@@ -8,12 +8,12 @@ module.exports = {
 		        'WEB-INF/tmpl/**/*.html'
 		    ]
 		},
-		'rt_dd': {
-			root: '/Users/zhengxingcheng/work/yonyou/iweb_cloudform/iform_parent/iform_parent/rt/src/main/webapp',
-			entry_files: [
-		        'static_dd/rt/iform_app/index.html'
-		    ]
-		},
+		// 'rt_dd': {
+		// 	root: '/Users/zhengxingcheng/work/yonyou/iweb_cloudform/iform_parent/iform_parent/rt/src/main/webapp',
+		// 	entry_files: [
+		//         'static_dd/rt/iform_app/index.html'
+		//     ]
+		// },
 		'rt': {
 			root: '/Users/zhengxingcheng/work/yonyou/iweb_cloudform/iform_parent/iform_parent/rt/src/main/webapp',
 			entry_files: [

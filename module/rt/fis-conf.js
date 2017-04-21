@@ -162,7 +162,8 @@ module.exports = function (webappRoot, entry_files) {
 						"refTree":  window.$ctx + "/static/js/uiref/refTree",\
 						"refcommon": window.$ctx + "/static/js/uiref/refcommon",\
 						"uiReferComp" : window.$ctx + "/static/js/uiref/uiReferComp",\
-						"uiReferFormInit" : window.$ctx + "/static/js/rt/uirefer.forminit"\
+						"uiReferFormInit" : window.$ctx + "/static/js/rt/uirefer.forminit",\
+						"getBillUserInfo": window.$ctx + "/static/js/rt/getBillUserInfo"\
 					},\
 					shim: {\
 						"refer":{\
