@@ -187,7 +187,8 @@ module.exports = function (webappRoot, entry_files) {
 								typeof window.referFormInit == "function" && window.referFormInit();\
 							}\
 						}\
-					}\
+					},\
+					config:{text:{useXhr: function(){return true}}}\
 				});\
 				require.jsExtRegExp = /^\\/|:\\/\\/|\\?/;'
 			)
