@@ -78,7 +78,7 @@ module.exports = function (webappRoot, entry_files) {
 				'ratyuui': 'js/rt/ratyuui',
 				'workflow': 'freebill/js/workflow',
 				// 'workflowmobile': 'freebill/js/workflowmobile',
-				// 'vue': 'freebill/js/vue',
+				'vue': 'freebill/js/vue',
 				'dateutil': 'freebill/js/dateutil',
 				'bpm':"freebill/js/bpm",
 				'texteditoruui': 'js/rt/texteditoruui',
@@ -191,6 +191,15 @@ module.exports = function (webappRoot, entry_files) {
 					config:{text:{useXhr: function(){return true}}}\
 				});\
 				require.jsExtRegExp = /^\\/|:\\/\\/|\\?/;'
+			)
+		}
+	});
+
+	fisMedia.match('/static/js/rt/report.js', {
+		parser: function (content) {
+			return content.replace(
+				/\/\*__REQUIRE_CONFIG__\*\/[\s\S\n\r]*\/\*__REQUIRE_CONFIG__\*\//g,
+				'require.jsExtRegExp = /^\\/|:\\/\\/|\\?/;'
 			)
 		}
 	});

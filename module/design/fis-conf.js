@@ -49,7 +49,7 @@ module.exports = function (webappRoot, entry_files) {
         url: '${ctx}/static/dist/$1',
         release: '/static/dist/$1'
     })
-    fisMedia.match('/(static/js/design/{form-new,teams}/**.html)', {
+    fisMedia.match('/(static/js/design/{form-new,teams,report}/**.html)', {
         id: '$1',
         parser: [
             replaceFreeMarkerVar('restore'),
@@ -69,39 +69,38 @@ module.exports = function (webappRoot, entry_files) {
         }
     });
 
-    fisMedia.match('/static/js/design/{form-new,teams}/index.js', {
+    fisMedia.match('/static/js/design/{form-new,teams,report}/index.js', {
 		parser: function (content) {
 			return content.replace(
 				/\/\*__REQUIRE_CONFIG__\*\/[\s\S\n\r]*\/\*__REQUIRE_CONFIG__\*\//g,
-				'\
-                require.config({\
-                    paths: {\
-                        "refer": window.$ctx + "/static/js/uiref/refer",\
-                        "reflib":  window.$ctx + "/static/js/uiref/reflib",\
-                        "refGrid":  window.$ctx + "/static/js/uiref/refGrid",\
-                        "refGridtree":  window.$ctx + "/static/js/uiref/refGridtree",\
-                        "refTree":  window.$ctx + "/static/js/uiref/refTree",\
-                        "refcommon": window.$ctx + "/static/js/uiref/refcommon",\
-                        "uiReferComp" : window.$ctx + "/static/js/uiref/uiReferComp"\
-                    },\
-                    shim: {\
-                        "refer":{\
-                            deps: ["reflib"]\
-                        },\
-                        "refGridtree":{\
-                            deps: ["reflib"]\
-                        },\
-                        "refGrid":{\
-                            deps: ["reflib"]\
-                        },\
-                        "refTree":{\
-                            deps: ["reflib"]\
-                        },\
-                        "refcommon":{\
-                            deps: ["reflib"]\
-                        }\
-                    }\
-                });\
+				'require.config({\n\
+                    paths: {\n\
+                        "refer": window.$ctx + "/static/js/uiref/refer",\n\
+                        "reflib":  window.$ctx + "/static/js/uiref/reflib",\n\
+                        "refGrid":  window.$ctx + "/static/js/uiref/refGrid",\n\
+                        "refGridtree":  window.$ctx + "/static/js/uiref/refGridtree",\n\
+                        "refTree":  window.$ctx + "/static/js/uiref/refTree",\n\
+                        "refcommon": window.$ctx + "/static/js/uiref/refcommon",\n\
+                        "uiReferComp" : window.$ctx + "/static/js/uiref/uiReferComp"\n\
+                    },\n\
+                    shim: {\n\
+                        "refer":{\n\
+                            deps: ["reflib"]\n\
+                        },\n\
+                        "refGridtree":{\n\
+                            deps: ["reflib"]\n\
+                        },\n\
+                        "refGrid":{\n\
+                            deps: ["reflib"]\n\
+                        },\n\
+                        "refTree":{\n\
+                            deps: ["reflib"]\n\
+                        },\n\
+                        "refcommon":{\n\
+                            deps: ["reflib"]\n\
+                        }\n\
+                    }\n\
+                });\n\
                 require.jsExtRegExp = /^\\/|:\\/\\/|\\?/;'
 			)
 		}
@@ -146,6 +145,13 @@ module.exports = function (webappRoot, entry_files) {
             }
         })
     })
+    fisMedia.match('/static/js/design/report/**', {
+        postprocessor: fis.plugin('amd', {
+            baseUrl: 'static/js/design/report/',
+            paths: {},
+            shim: {}
+        })
+    })
     fisMedia.match(makePattern(
             '/static/js/design/teams/**',
             '/static/js/design/echarts.min.js'
@@ -166,6 +172,7 @@ module.exports = function (webappRoot, entry_files) {
             '/static/css/design/**.css',
             '/static/(**.{png,jpg,jpeg,gif,eot,svg,ttf,woff})',
             '/static/js/design/form-new/**',
+            '/static/js/design/report/**',
             '/static/js/design/teams/**',
             '/static/js/design/mission-center/**',
             '/static/js/filesystem/**'
@@ -186,14 +193,18 @@ module.exports = function (webappRoot, entry_files) {
     })
     fisMedia.match(makePattern(
         '/static/js/design/form-new/**.js',
-        '/static/js/design/teams/**.js'
+        '/static/js/design/teams/**.js',
+        '/static/js/design/report/**.js'
     ), {
         optimizer: fis.plugin('uglify-js')
     })
     fisMedia.match('/static/css/design/**.css', {
         optimizer: fis.plugin('clean-css')
     })
-    fisMedia.match('/static/js/design/form-new/lib/**', {
+    fisMedia.match(makePattern(
+        '/static/js/design/form-new/lib/**',
+        '/static/js/design/report/lib/**'
+    ), {
         useAMD: false
     })
 	fisMedia.match('/static/js/design/form-new/lib/**/vue/**', {
@@ -203,6 +214,7 @@ module.exports = function (webappRoot, entry_files) {
             '/static/js/design/**{-,.}min.{js,css}',
             '/static/js/design/form-new/lib/**.map',
             '/static/js/design/form-new/index.js',
+            '/static/js/design/report/index.js',
             '/static/js/design/eteams/index.js'
         ), {
         optimizer: false
